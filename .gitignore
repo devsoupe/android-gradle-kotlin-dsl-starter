@@ -361,3 +361,4 @@ Thumbs.db
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,intellij+all,java,kotlin,fastlane,firebase,git
+app/libs/
