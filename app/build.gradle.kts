@@ -1,5 +1,10 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import com.github.glwithu06.semver.Semver
 import extension.buildConfigBooleanField
 import extension.getKeystoreProperty
+import extension.getVersionProperty
+import extension.setVersionProperty
+import util.getDateStringByFormatter
 
 plugins {
   id(BuildPluginId.ANDROID_APPLICATION)
@@ -16,9 +21,32 @@ android {
     targetSdkVersion(BuildAndroid.TARGET_SDK_VERSION)
     buildToolsVersion(BuildAndroid.BUILD_TOOLS_VERSION)
 
+    var increaseVersion = 0
+
+    val runTaskNames = gradle.startParameter.taskNames
+    if ("assemble" in runTaskNames || "assembleRelease" in runTaskNames || "aR" in runTaskNames) {
+      increaseVersion = 1
+    }
+
+    val dateString = util.getDateStringByFormatter("yyMMdd")
+    val buildVersion = getVersionProperty("version.build").toInt() + 1
+    val identifierVersion = getVersionProperty("identifier.version").toInt() + increaseVersion
+    val codeVersion = getVersionProperty("version.code").toInt() + increaseVersion
+    val semanticVersion = Semver(
+      major = getVersionProperty("version.major").toInt(),
+      minor = getVersionProperty("version.minor").toInt(),
+      patch = getVersionProperty("version.patch").toInt(),
+      prereleaseIdentifiers = listOf(getVersionProperty("identifier.type"), identifierVersion.toString()),
+      buildMetadataIdentifiers = listOf("D${dateString}B${String.format("%03d", buildVersion)}")
+    )
+
     applicationId = BuildAndroid.APPLICATION_ID
-    versionCode = BuildAndroid.VERSION_CODE
-    versionName = BuildAndroid.VERSION_NAME
+    versionCode = codeVersion
+    versionName = "($semanticVersion)"
+
+    setVersionProperty("version.build", buildVersion.toString())
+    setVersionProperty("identifier.version", identifierVersion.toString())
+    setVersionProperty("version.code", codeVersion.toString())
 
     testInstrumentationRunner = BuildAndroid.TEST_INSTRUMENTATION_RUNNER
   }
@@ -63,12 +91,16 @@ android {
     }
   }
 
+  /**
+   * Use when product classification is necessary
+   */
+  /*
   flavorDimensions(BuildProductDimension.ENVIRONMENT)
   productFlavors {
     ProductFlavorDevelop.create(this)
     ProductFlavorQA.create(this)
     ProductFlavorProduction.create(this)
-  }
+  }*/
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -102,6 +134,13 @@ android {
 
     getByName("androidTest") {
       java.srcDir("src/androidTest/kotlin")
+    }
+  }
+
+  applicationVariants.all {
+
+    outputs.all {
+      (this as BaseVariantOutputImpl).outputFileName = "${BuildAndroid.BUILD_FILE_PREFIX}_$versionName.apk"
     }
   }
 }
