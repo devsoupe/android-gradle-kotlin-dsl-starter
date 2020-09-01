@@ -4,5 +4,5 @@
 ![Language](https://img.shields.io/badge/kotlin-100.0%25-blue?logo=kotlin)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-🏠 <b>For those who want to start a project with the Kotlin DSL,
-`Android Gradle Kotlin DSL Starter` provides a simple template.</b>
+<b>`Android Gradle Kotlin DSL Starter`</b> provides a simple template for those who want to start a project with the Kotlin DSL.
+
