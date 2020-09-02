@@ -15,7 +15,7 @@ tasks {
   }
 
   register<Exec>("installGitHooks") {
-    description = "Installs the pre-commit git hooks from scripts/git-hooks."
+    description = "Installs the pre-push git hooks from scripts/git-hooks."
     group = BuildTasksGroup.GIT_HOOKS
     workingDir(rootDir)
     commandLine("chmod")
@@ -30,7 +30,7 @@ tasks {
   }
 
   register<Delete>("deleteGitHooks") {
-    description = "Delete the pre-commit git hooks."
+    description = "Delete the pre-push git hooks."
     group = BuildTasksGroup.GIT_HOOKS
     delete(fileTree(".git/hooks/"))
   }
