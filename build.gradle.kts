@@ -1,3 +1,14 @@
+buildscript {
+
+  repositories {
+    google()
+  }
+
+  dependencies {
+    classpath("${BuildPluginClassPath.GRADLE_ANDROID}:${BuildPluginVersion.GRADLE_ANDROID}")
+  }
+}
+
 plugins {
   id(BuildPluginId.KTLINT) version BuildPluginVersion.KTLINT
 }

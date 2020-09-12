@@ -7,18 +7,16 @@ plugins {
 repositories {
   google()
   jcenter()
-  mavenCentral()
-  maven("https://plugins.gradle.org/m2/")
 }
 
-object BuildPluginId {
+object BuildSrcId {
   const val GRADLE_ANDROID = "com.android.tools.build:gradle"
   const val DETEKT = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin"
   const val SEMVER = "com.github.glwithu06.semver:semver"
   const val APACHE_COMMON_CONFIGURATION = "org.apache.commons:commons-configuration2"
 }
 
-object BuildPluginVersion {
+object BuildSrcVersion {
   const val GRADLE_ANDROID = "4.0.1"
   const val DETEKT = "1.10.0"
   const val SEMVER = "1.0.1"
@@ -26,10 +24,10 @@ object BuildPluginVersion {
 }
 
 dependencies {
-  implementation("${BuildPluginId.GRADLE_ANDROID}:${BuildPluginVersion.GRADLE_ANDROID}")
-  implementation("${BuildPluginId.DETEKT}:${BuildPluginVersion.DETEKT}")
-  implementation("${BuildPluginId.SEMVER}:${BuildPluginVersion.SEMVER}")
+  implementation("${BuildSrcId.GRADLE_ANDROID}:${BuildSrcVersion.GRADLE_ANDROID}")
+  implementation("${BuildSrcId.DETEKT}:${BuildSrcVersion.DETEKT}")
+  implementation("${BuildSrcId.SEMVER}:${BuildSrcVersion.SEMVER}")
   implementation(
-    "${BuildPluginId.APACHE_COMMON_CONFIGURATION}:${BuildPluginVersion.APACHE_COMMON_CONFIGURATION}"
+    "${BuildSrcId.APACHE_COMMON_CONFIGURATION}:${BuildSrcVersion.APACHE_COMMON_CONFIGURATION}"
   )
 }

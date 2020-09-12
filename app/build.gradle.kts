@@ -42,7 +42,7 @@ android {
 
     applicationId = BuildAndroid.APPLICATION_ID
     versionCode = codeVersion
-    versionName = "($semanticVersion)"
+    versionName = "$semanticVersion"
 
     setVersionProperty("version.build", buildVersion.toString())
     setVersionProperty("identifier.version", identifierVersion.toString())
